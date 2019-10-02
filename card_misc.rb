@@ -28,7 +28,7 @@ module CardMisc
       unicode_suits = { 'spades': '♠', 'hearts': '♥',
                         'diamonds': '♦', 'clubs': '♣' }
       colors_abbrev = { 'ace': 'A', 'jack': 'J', 'queen': 'Q', 'king': 'K' }
-      encoded_suit = unicode_suits[suit]
+      encoded_suit = unicode_suits[suit.to_sym]
 
       return "#{color}#{encoded_suit}" if color.is_a?(Integer)
 
