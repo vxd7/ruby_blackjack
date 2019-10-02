@@ -16,4 +16,3 @@ class PokerDeck
     @deck.shift(num)
   end
 end
-
