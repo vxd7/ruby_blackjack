@@ -44,4 +44,11 @@ class Bank
     @player_banks[player] += all_bets
     @player_bets.keys.each { |pl| @player_bets[pl] = 0 }
   end
+
+  def draw
+    @player_banks.keys.each do |player|
+      @player_banks[player] += @player_bets[player]
+      @player_bets[player] = 0
+    end
+  end
 end
