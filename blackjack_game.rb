@@ -88,7 +88,7 @@ class BlackjackGame
 
     game_winner = winner
 
-    user_interface.finish_game(player_hand, comp_player_hand, game_winner)
+    @user_interface.finish_game(player_hand, comp_player_hand, game_winner)
   end
 
   def winner
