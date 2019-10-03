@@ -8,7 +8,7 @@ class PokerDeck
 
   def initialize
     @deck = []
-    RANKS.each { |r| SUITS.each { |s| @deck << Card.new(r, s) } }
+    COLORS.each { |r| SUITS.each { |s| @deck << Card.new(s, r) } }
     @deck.shuffle!
   end
 
