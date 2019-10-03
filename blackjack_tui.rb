@@ -34,6 +34,7 @@ class BlackjackTui
 
     act_name = player.class::ACTIONS[player_action.to_i]
     player.send("move_#{act_name}")
+
   rescue StandardError => e
     puts 'There was an error!'
     puts "The message was: #{e.message}"
@@ -41,11 +42,14 @@ class BlackjackTui
     retry
   end
 
-  def finish_game(player_hand, player_pts, comp_player_hand, comp_player_pts,
-                  winner)
+  def finish_game(player_hand, player_pts, comp_player_hand,
+                  comp_player_pts, winner)
     puts '----------------------------------------'
     puts '!!! > Game finished < !!!'
-    puts "Winner is: #{winner.name}"
+
+    puts 'Its a draw!' if winner == :draw
+    puts "Winner is: #{winner.name}" unless winner == :draw
+
     puts "Your cards: #{hand_to_str(player_hand)}; Your points: #{player_pts}"
     puts "ComputerPlayer cards: #{hand_to_str(comp_player_hand)}; Points: #{comp_player_pts}"
     puts '----------------------------------------'
