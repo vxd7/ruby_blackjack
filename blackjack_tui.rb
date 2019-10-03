@@ -5,26 +5,24 @@ require_relative 'blackjack_game'
 class BlackjackTui
   MOVES = ['Skip move', 'Add card', 'Open cards'].freeze
 
-  def initialize
-    @player_name = start_game
-    @blackjack_game = BlackjackGame(self, @player_name)
-    @blackjack_game.new_game
-  end
-
   def start_game
     puts '----- Welcome to the BlackJack game -----'
     print 'Please input your name: '
     player_name = gets.chomp
-    print '----------------------------------------'
-    player_name
-  end
-
-  def comp_player_info
+    puts '----------------------------------------'
+    @blackjack_game = BlackjackGame.new(self, player_name)
+    @blackjack_game.new_game
   end
 
   def game_move(player)
+    puts "!> Computer player last action was: #{comp_player_status}"
+    print '!> Computer player cards:'
+    @blackjack_game.comp_player_cards.times { print '* ' }
+    puts ''
+    puts '----------------------------------------'
+
     puts '----- Your turn -----'
-    puts "> Your cards: #{player.hand}"
+    puts "> Your cards: #{hand_to_str(player.hand)}"
     puts "> Your points: #{player.hand_value}"
     puts "> Your money: #{player.money_in_bank}"
     puts ''
@@ -34,8 +32,32 @@ class BlackjackTui
     print 'Your choise: '
     player_action = gets.chomp
 
-    act_name = player.ACTIONS[player_action]
-    player.call("move_#{act_name}")
+    act_name = player.class::ACTIONS[player_action.to_i]
+    player.send("move_#{act_name}")
   end
 
+  private
+
+  def hand_to_str(hand)
+    res_str = ''
+    hand.each { |card| res_str += card.to_s + ' ' }
+    res_str
+  end
+
+  def comp_player_status
+    @blackjack_game.comp_player_last_move
+  end
+
+  def finish_game(player_hand, comp_player_hand, winner)
+    puts '!!! > Game finished < !!!'
+    puts "Winner is: #{winner.name}"
+    puts "Your cards: #{player_hand}"
+    puts "ComputerPlayer cards: #{comp_player_hand}"
+    puts '----------------------------------------'
+    puts ''
+    puts 'New game? [y/n]'
+    new_game = gets.chomp
+
+    @blackjack_game.continue_game if new_game == 'y'
+  end
 end
