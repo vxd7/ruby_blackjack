@@ -2,8 +2,6 @@
 
 class ComputerPlayer < Player
   def initialize(bank)
-    send(:private, hand)
-
     super('ComputerPlayer', bank)
   end
 
@@ -14,4 +12,8 @@ class ComputerPlayer < Player
       move_add_card
     end
   end
+
+  private
+
+  attr_reader :hand
 end
