@@ -73,6 +73,11 @@ class BlackjackGame
 
   def finish_game
     # Open cards and finish game
+    @game_state = GAME_FINISHED
+
+    player_hand = player.hand
+    comp_player_hand = comp_player.send(:hand)
+    user_interface.finish_game(player_hand, comp_player_hand)
   end
 
   def start_game
@@ -91,7 +96,6 @@ class BlackjackGame
       break if check_fin_condition
     end
 
-    @game_state = GAME_FINISHED
     finish_game
   end
 end
