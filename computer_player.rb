@@ -2,6 +2,8 @@
 
 class ComputerPlayer < Player
   def initialize(bank)
+    send(:private, hand)
+
     super('ComputerPlayer', bank)
   end
 

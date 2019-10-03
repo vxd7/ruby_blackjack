@@ -76,7 +76,7 @@ class BlackjackGame
     @game_state = GAME_FINISHED
 
     player_hand = player.hand
-    comp_player_hand = comp_player.send(:hand)
+    comp_player_hand = comp_player.instance_variable_get('hand')
     user_interface.finish_game(player_hand, comp_player_hand)
   end
 

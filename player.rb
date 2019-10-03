@@ -2,7 +2,7 @@
 
 class Player
   ACTIONS = [:skip, :add_card, :open_cards].freeze
-  attr_reader :hand
+  attr_reader :hand, :name
 
   def initialize(name, bank)
     @name = name
@@ -20,6 +20,10 @@ class Player
     overall_value = 0
     @hand.each { |card| overall_value += card.points(overall_value) }
     overall_value
+  end
+
+  def number_cards
+    @hand.length
   end
 
   def money_in_bank
