@@ -6,7 +6,7 @@ class ComputerPlayer < Player
   end
 
   def calculate_move
-    if hand_value >= 17
+    if hand_value >= 17 || number_cards == 3
       move_skip
     else
       move_add_card
