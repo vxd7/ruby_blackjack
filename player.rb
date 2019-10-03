@@ -22,6 +22,10 @@ class Player
     overall_value
   end
 
+  def empty_hand
+    @hand = []
+  end
+
   def number_cards
     @hand.length
   end
