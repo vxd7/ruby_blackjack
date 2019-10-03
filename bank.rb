@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 class Bank
-  def initialize(*players, sum)
-    raise ValueError, 'No players specified' if players.empty?
-    raise ValueError, 'Invalid initial player bank' if sum <= 0
-
+  def initialize
     @player_banks = {}
     @player_bets = {}
-    players.each do |player|
-      @player_banks[player] = sum
-      @player_bets[player] = 0
-    end
+  end
+
+  def register_player(player, sum)
+    raise ValueError, 'Invalid initial player bank' if sum <= 0
+
+    @player_banks[player] = sum
+    @player_bets[player] = 0
   end
 
   def make_bet(player, bet)
