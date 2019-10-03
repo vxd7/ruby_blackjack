@@ -43,6 +43,8 @@ class BlackjackGame
 
     @game_state = GAME_STARTED
     @deck = PokerDeck.new
+    @human_player.empty_hand
+    @comp_player.empty_hand
     start_game
   end
 
