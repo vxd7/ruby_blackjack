@@ -58,6 +58,8 @@ class BlackjackGame
     return if action == :skip
 
     send("action_#{action}", player)
+  rescue StandardError
+    retry
   end
 
   def comp_player_cards
@@ -88,9 +90,18 @@ class BlackjackGame
     player_hand = @human_player.hand
     comp_player_hand = @comp_player.instance_variable_get('@hand')
 
+    # Check bank and reward winner
     game_winner = winner
+    if game_winner == :draw
+      @bank.send(:draw)
+    else
+      @bank.send(:reward_winner, game_winner)
+    end
 
-    @user_interface.finish_game(player_hand, comp_player_hand, game_winner)
+    # Finally finish everything in UI
+    @user_interface.finish_game(player_hand, @human_player.hand_value,
+                                comp_player_hand, @comp_player.hand_value,
+                                game_winner)
   end
 
   def winner
@@ -103,6 +114,7 @@ class BlackjackGame
     return @human_player if comp_player_hand_value > 21
 
     return @human_player if 21 - player_hand_value < 21 - comp_player_hand_value
+
     @comp_player
   end
 
