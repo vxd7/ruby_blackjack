@@ -16,6 +16,12 @@ class Player
     (@hand << cards).flatten!
   end
 
+  def hand_value
+    overall_value = 0
+    @hand.each { |card| overall_value += card.points(overall_value) }
+    overall_value
+  end
+
   def money_in_bank
     @bank.player_bank(self)
   end
@@ -28,11 +34,11 @@ class Player
     ACTIONS[0]
   end
 
-  def move_add
+  def move_add_card
     ACTIONS[1]
   end
 
-  def move_open
+  def move_open_cards
     ACTIONS[2]
   end
 end
