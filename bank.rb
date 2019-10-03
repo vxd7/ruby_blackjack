@@ -17,6 +17,8 @@ class Bank
     @sum_bets += bet
   end
 
+  private
+
   def reward_winner(player)
     raise ValueError, 'No such player' unless @player_banks.include?(player)
 
