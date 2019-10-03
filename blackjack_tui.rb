@@ -34,6 +34,27 @@ class BlackjackTui
 
     act_name = player.class::ACTIONS[player_action.to_i]
     player.send("move_#{act_name}")
+  rescue StandardError => e
+    puts 'There was an error!'
+    puts "The message was: #{e.message}"
+    puts 'Try again'
+    retry
+  end
+
+  def finish_game(player_hand, player_pts, comp_player_hand, comp_player_pts,
+                  winner)
+    puts '----------------------------------------'
+    puts '!!! > Game finished < !!!'
+    puts "Winner is: #{winner.name}"
+    puts "Your cards: #{hand_to_str(player_hand)}; Your points: #{player_pts}"
+    puts "ComputerPlayer cards: #{hand_to_str(comp_player_hand)}; Points: #{comp_player_pts}"
+    puts '----------------------------------------'
+    puts ''
+    puts 'New game? [y/n]'
+    new_game = gets.chomp
+
+    @blackjack_game.continue_game if new_game == 'y'
+    exit(0) if new_game == 'n'
   end
 
   private
@@ -48,16 +69,4 @@ class BlackjackTui
     @blackjack_game.comp_player_last_move
   end
 
-  def finish_game(player_hand, comp_player_hand, winner)
-    puts '!!! > Game finished < !!!'
-    puts "Winner is: #{winner.name}"
-    puts "Your cards: #{player_hand}"
-    puts "ComputerPlayer cards: #{comp_player_hand}"
-    puts '----------------------------------------'
-    puts ''
-    puts 'New game? [y/n]'
-    new_game = gets.chomp
-
-    @blackjack_game.continue_game if new_game == 'y'
-  end
 end
