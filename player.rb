@@ -2,6 +2,7 @@
 
 class Player
   ACTIONS = [:skip, :add_card, :open_cards].freeze
+  attr_reader :hand
 
   def initialize(name, bank)
     @name = name
