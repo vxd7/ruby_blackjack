@@ -16,7 +16,7 @@ module CardMisc
         raise ValueError, 'Incorrect card color' if color < 2 || color > 10
       end
 
-      return 10 if color.in('jack', 'queen', 'king')
+      return 10 if ['jack', 'queen', 'king'].include?(color)
 
       return color if color.is_a?(Integer)
 
