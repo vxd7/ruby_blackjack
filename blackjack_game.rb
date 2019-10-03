@@ -11,6 +11,7 @@ class BlackjackGame
   GAME_STARTED = :game_started
   GAME_FINISHED = :game_finished
   attr_reader :human_player, :comp_player, :game_state
+  attr_reader :comp_player_last_move
 
   def initialize(user_interface, player_name = 'HumanPlayer')
     @deck = PokerDeck.new
@@ -46,12 +47,19 @@ class BlackjackGame
   end
 
   def game_move(player)
-    player.calculate_move if player.is_a?(ComputerPlayer)
-
-    action = @user_interface.game_move(player.hand)
+    if player.is_a?(ComputerPlayer)
+      action = player.calculate_move
+      @comp_player_last_move = action
+    else
+      action = @user_interface.game_move(player)
+    end
     return if action == :skip
 
-    call("action_#{action}", player)
+    send("action_#{action}", player)
+  end
+
+  def comp_player_cards
+    @comp_player.number_cards
   end
 
   private
@@ -75,9 +83,25 @@ class BlackjackGame
     # Open cards and finish game
     @game_state = GAME_FINISHED
 
-    player_hand = player.hand
-    comp_player_hand = comp_player.instance_variable_get('hand')
-    user_interface.finish_game(player_hand, comp_player_hand)
+    player_hand = @human_player.hand
+    comp_player_hand = @comp_player.instance_variable_get('@hand')
+
+    game_winner = winner
+
+    user_interface.finish_game(player_hand, comp_player_hand, game_winner)
+  end
+
+  def winner
+    player_hand_value = @human_player.hand_value
+    comp_player_hand_value = @comp_player.hand_value
+
+    return :draw if player_hand_value == comp_player_hand_value
+
+    return @comp_player if player_hand_value > 21
+    return @human_player if comp_player_hand_value > 21
+
+    return @human_player if 21 - player_hand_value < 21 - comp_player_hand_value
+    @comp_player
   end
 
   def start_game
