@@ -18,7 +18,13 @@ class Player
 
   def hand_value
     overall_value = 0
-    @hand.each { |card| overall_value += card.points(overall_value) }
+    has_ace = false
+    @hand.each do |card|
+      has_ace = true if card.color == 'ace'
+      overall_value += card.points(overall_value)
+    end
+
+    overall_value -= 10 if has_ace
     overall_value
   end
 
