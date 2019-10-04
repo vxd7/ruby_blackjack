@@ -20,8 +20,8 @@ class BlackjackGame
 
     @user_interface = user_interface
 
-    @bank.register_player(@human_player, 100)
-    @bank.register_player(@comp_player, 100)
+    @bank.register_player(@human_player)
+    @bank.register_player(@comp_player)
 
     @game_state = GAME_NOT_STARTED
   end
