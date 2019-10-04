@@ -24,7 +24,7 @@ class Player
       overall_value += card.points(overall_value)
     end
 
-    overall_value -= 10 if has_ace
+    overall_value -= 10 if has_ace && overall_value > 21
     overall_value
   end
 
