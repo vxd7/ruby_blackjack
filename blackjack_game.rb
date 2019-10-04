@@ -6,7 +6,6 @@ require_relative 'player'
 require_relative 'computer_player'
 
 class BlackjackGame
-  DEFAULT_BET = 10
   GAME_NOT_STARTED = :game_not_started
   GAME_STARTED = :game_started
   GAME_FINISHED = :game_finished
@@ -124,8 +123,8 @@ class BlackjackGame
     @comp_player.take_cards(@deck.deal(2))
 
     # Make auto bets
-    @bank.make_bet(human_player, DEFAULT_BET)
-    @bank.make_bet(comp_player, DEFAULT_BET)
+    @bank.make_bet(human_player)
+    @bank.make_bet(comp_player)
 
     loop do
       game_move(@human_player)

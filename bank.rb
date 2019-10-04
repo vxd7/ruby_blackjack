@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 class Bank
+  DEFAULT_BET = 10
+
   def initialize
     @player_banks = {}
     @player_bets = {}
   end
 
-  def register_player(player, sum)
+  def register_player(player, sum = DEFAULT_BET)
     raise ValueError, 'Invalid initial player bank' if sum <= 0
 
     @player_banks[player] = sum
