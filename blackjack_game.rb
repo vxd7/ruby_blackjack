@@ -6,6 +6,7 @@ require_relative 'player'
 require_relative 'computer_player'
 
 class BlackjackGame
+  BLACKJACK_POINTS = 21
   GAME_NOT_STARTED = :game_not_started
   GAME_STARTED = :game_started
   GAME_FINISHED = :game_finished
@@ -109,10 +110,10 @@ class BlackjackGame
 
     return :draw if player_hand_value == comp_player_hand_value
 
-    return @comp_player if player_hand_value > 21
-    return @human_player if comp_player_hand_value > 21
+    return @comp_player if player_hand_value > BLACKJACK_POINTS
+    return @human_player if comp_player_hand_value > BLACKJACK_POINTS
 
-    return @human_player if 21 - player_hand_value < 21 - comp_player_hand_value
+    return @human_player if BLACKJACK_POINTS - player_hand_value < BLACKJACK_POINTS - comp_player_hand_value
 
     @comp_player
   end
