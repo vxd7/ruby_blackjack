@@ -7,6 +7,7 @@ require_relative 'computer_player'
 
 class BlackjackGame
   BLACKJACK_POINTS = 21
+  PLAYER_MAX_CARDS = 3
   GAME_NOT_STARTED = :game_not_started
   GAME_STARTED = :game_started
   GAME_FINISHED = :game_finished
@@ -69,7 +70,9 @@ class BlackjackGame
   private
 
   def action_add_card(player)
-    raise 'Cannot add card! Player already has 3 cards' if player.number_cards == 3
+    if player.number_cards == PLAYER_MAX_CARDS
+      raise 'Cannot add card! Player already has 3 cards' 
+    end
 
     player.take_cards(@deck.deal(1))
   end
@@ -80,7 +83,8 @@ class BlackjackGame
   end
 
   def check_fin_condition
-    @human_player.number_cards == 3 && @comp_player.number_cards == 3
+    (@human_player.number_cards == PLAYER_MAX_CARDS) &&
+      (@comp_player.number_cards == PLAYER_MAX_CARDS)
   end
 
   def finish_game
