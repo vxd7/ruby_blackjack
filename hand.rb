@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Hand
+  attr_reader :cards
+
   def initialize(cards)
     raise 'Initially there can be only 2 cards on hand' if cards.length > 2
 
