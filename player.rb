@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'hand'
+
 class Player
   ACTIONS = [:skip, :add_card, :open_cards].freeze
   attr_reader :hand, :name
@@ -7,17 +9,10 @@ class Player
   def initialize(name, bank)
     @name = name
     @bank = bank
-    @hand = []
   end
 
-  def take_cards(cards)
-    raise ValueError, 'Cannot take more than 2 cards' if cards.length > 2
-
-    (@hand << cards).flatten!
-  end
-
-  def empty_hand
-    @hand = []
+  def new_hand(cards)
+    @hand = Hand.new(cards)
   end
 
   def money_in_bank
