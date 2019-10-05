@@ -8,6 +8,9 @@ class Card
   attr_reader :suit, :color
 
   def initialize(suit, color)
+    raise ValueError, 'Incorrect card suit' unless SUITS.include?(suit)
+    raise ValueError, 'Incorrect card color' unless COLORS.include?(color)
+
     @suit = suit
     @color = color
   end
