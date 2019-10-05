@@ -22,8 +22,8 @@ class BlackjackTui
     puts '----------------------------------------'
 
     puts '----- Your turn -----'
-    puts "> Your cards: #{hand_to_str(player.hand)}"
-    puts "> Your points: #{player.hand_value}"
+    puts "> Your cards: #{hand_to_str(player.hand.cards)}"
+    puts "> Your points: #{player.hand.hand_value}"
     puts "> Your money: #{player.money_in_bank}"
     puts ''
     puts 'Possible moves:'
@@ -63,9 +63,9 @@ class BlackjackTui
 
   private
 
-  def hand_to_str(hand)
+  def hand_to_str(cards)
     res_str = ''
-    hand.each { |card| res_str += card.to_s + ' ' }
+    cards.each { |card| res_str += card.to_s + ' ' }
     res_str
   end
 

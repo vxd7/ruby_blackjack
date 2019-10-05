@@ -44,8 +44,6 @@ class BlackjackGame
 
     @game_state = GAME_STARTED
     @deck = PokerDeck.new
-    @human_player.empty_hand
-    @comp_player.empty_hand
     start_game
   end
 
@@ -64,17 +62,17 @@ class BlackjackGame
   end
 
   def comp_player_cards
-    @comp_player.number_cards
+    @comp_player.hand.number_cards
   end
 
   private
 
   def action_add_card(player)
-    if player.number_cards == PLAYER_MAX_CARDS
-      raise 'Cannot add card! Player already has 3 cards' 
+    if player.hand.number_cards == PLAYER_MAX_CARDS
+      raise 'Cannot add card! Player already has 3 cards'
     end
 
-    player.take_cards(@deck.deal(1))
+    player.hand.take_card(@deck.deal(1))
   end
 
   def action_open_cards(_player)
@@ -83,16 +81,16 @@ class BlackjackGame
   end
 
   def check_fin_condition
-    (@human_player.number_cards == PLAYER_MAX_CARDS) &&
-      (@comp_player.number_cards == PLAYER_MAX_CARDS)
+    (@human_player.hand.number_cards == PLAYER_MAX_CARDS) &&
+      (@comp_player.hand.number_cards == PLAYER_MAX_CARDS)
   end
 
   def finish_game
     # Open cards and finish game
     @game_state = GAME_FINISHED
 
-    player_hand = @human_player.hand
-    comp_player_hand = @comp_player.instance_variable_get('@hand')
+    player_hand = @human_player.hand.cards
+    comp_player_hand = @comp_player.hand.cards
 
     # Check bank and reward winner
     game_winner = winner
@@ -103,14 +101,14 @@ class BlackjackGame
     end
 
     # Finally finish everything in UI
-    @user_interface.finish_game(player_hand, @human_player.hand_value,
-                                comp_player_hand, @comp_player.hand_value,
+    @user_interface.finish_game(player_hand, @human_player.hand.hand_value,
+                                comp_player_hand, @comp_player.hand.hand_value,
                                 game_winner)
   end
 
   def winner
-    player_hand_value = @human_player.hand_value
-    comp_player_hand_value = @comp_player.hand_value
+    player_hand_value = @human_player.hand.hand_value
+    comp_player_hand_value = @comp_player.hand.hand_value
 
     return :draw if player_hand_value == comp_player_hand_value
 
