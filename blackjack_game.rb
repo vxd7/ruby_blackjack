@@ -124,8 +124,8 @@ class BlackjackGame
 
   def start_game
     # Deal cards
-    @human_player.take_cards(@deck.deal(2))
-    @comp_player.take_cards(@deck.deal(2))
+    @human_player.new_hand(@deck.deal(2))
+    @comp_player.new_hand(@deck.deal(2))
 
     # Make auto bets
     @bank.make_bet(human_player)
