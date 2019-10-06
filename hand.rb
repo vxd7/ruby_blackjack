@@ -10,7 +10,11 @@ class Hand
   end
 
   def take_card(card)
-    @cards << card
+    if card.is_a?(Array)
+      raise 'Can take only one card!' unless card.length == 1
+    end
+
+    (@cards << card).flatten!
   end
 
   def number_cards
