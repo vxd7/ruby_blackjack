@@ -8,7 +8,7 @@ class ComputerPlayer < Player
   end
 
   def calculate_move
-    if hand_value >= DECISION_HAND_VALUE || number_cards == MAX_CARD_NUMBER
+    if hand.hand_value >= DECISION_HAND_VALUE || hand.number_cards == MAX_CARD_NUMBER
       move_skip
     else
       move_add_card
